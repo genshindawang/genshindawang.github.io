@@ -13,7 +13,7 @@ const entries = (await papers()).filter(p=>p.data.status !== "queue");
     <form action={url("/search/")} method="get" class="mt-4 xl:hidden"><input class="notebook-search !w-full" type="search" name="q" aria-label="搜索论文和笔记" placeholder="搜索论文和笔记，按回车确认" /></form>
     <div class="flex gap-5 text-sm mt-5 text-50" aria-label="阅读状态筛选"><a data-status-filter="" href={url("/")} class="hover:text-[var(--primary)]">全部</a><a data-status-filter="reading" href={url("/?status=reading")} class="hover:text-[var(--primary)]">正在读</a><a data-status-filter="finished" href={url("/?status=finished")} class="hover:text-[var(--primary)]">已读完</a></div>
   </section>
-  {entries.some(p=>p.data.isSample) && <p class="text-50 text-sm px-2 mb-4">标注“示例”的内容用于演示排版，可在 GitHub 中修改或删除对应 Markdown 文件。</p>}
+  {entries.some(p=>p.data.isSample) && <p class="text-50 text-sm px-2 mb-4">标注“示例”的内容用于演示排版，可在写作后台修改或管理。</p>}
   <div class="flex flex-col gap-4">{entries.map(paper=><PaperCard paper={paper} />)}</div>
   <div id="empty-state" hidden class="card-base p-10 text-center text-50">还没有这个状态的论文笔记。</div>
 </MainGridLayout>

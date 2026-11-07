@@ -40,7 +40,7 @@ export const siteConfig: SiteConfig = {
 };
 
 export const navBarConfig: NavBarConfig = {
- links: [{name:"论文笔记",url:"/",external:false},{name:"论文分类",url:"/categories/",external:false},{name:"待读清单",url:"/to-read/",external:false}]
+ links: [{name:"论文笔记",url:"/",external:false},{name:"论文分类",url:"/categories/",external:false},{name:"待读清单",url:"/to-read/",external:false},{name:"写作空间",url:"/admin/",external:false}]
 };
 
 export const profileConfig: ProfileConfig = {

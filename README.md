@@ -4,13 +4,19 @@
 
 发布后地址：https://genshindawang.github.io/
 
-## 日常只需要编辑 Markdown
+## 日常用在线写作后台
 
-每篇论文在 `src/content/posts/` 里对应一个 `.md` 文件。网页上的“在 GitHub 编辑”会直接打开该文件；修改后点击 GitHub 的 **Commit changes**，Actions 会自动构建并发布。
+打开博客的 [写作空间](https://genshindawang.github.io/admin/)，进入 [Pages CMS 后台](https://app.pagescms.org/genshindawang/genshindawang.github.io/main/collection/papers)。标题、分类和阅读状态用表单填写，正文在编辑器里写；保存会自动提交到 GitHub 并触发发布。
 
-**新建笔记**：博客首页“写笔记”会打开 GitHub 新文件页面并填入模板。把文件名改成自己的论文短名，填写内容，最后把 `draft: true` 改成 `draft: false` 再提交。
+首次使用：用 GitHub 登录 Pages CMS，并在安装 GitHub App 时选择 **Only select repositories**，只授权 `genshindawang.github.io`。此授权需要账号所有者完成。以后无需手动编辑文件头、起文件名、运行 Git 或填写 access token。
 
-**待读清单**：同一个文件中的 `status` 控制位置：`queue` 待读，`reading` 正在读，`finished` 已读完。分类填 `category`，标签填 `tags`，会自动生成对应页面。
+**写笔记**：首页“写笔记”进入新建表单；文章页“编辑这篇笔记”进入该篇表单。点击 Save 即保存并开始自动发布。**待读清单**：阅读状态选择「待读」「正在读」或「已读完」，不用移动文件。分类自由填写，会自动生成分类页。正文图片上传到 `public/uploads/`。
+
+带 LaTeX 公式、HTML details 折叠自测等特殊 Markdown 的正文，请用编辑器的 **Source** 模式编辑和保存，避免普通富文本排版改写这些语法。后台字段和媒体目录由根目录 `.pages.yml` 配置；它不包含凭证。
+
+## Markdown 格式（供本地写作使用）
+
+每篇论文仍在 `src/content/posts/` 里对应一个 `.md` 文件。后台与本地写作使用同一份内容，已有格式不变。例如：
 
 ```yaml
 ---

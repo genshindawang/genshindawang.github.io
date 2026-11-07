@@ -1,0 +1,98 @@
+# Online writing interface: https://app.pagescms.org
+# Content stays in GitHub; Pages CMS handles sign-in and saves.
+media:
+  input: public/uploads
+  output: /uploads
+  categories: [image]
+  rename: random
+settings:
+  content:
+    merge: true
+content:
+  - name: papers
+    label: 论文笔记与待读
+    type: collection
+    path: src/content/posts
+    format: yaml-frontmatter
+    filename:
+      template: "{year}{month}{day}-{hour}{minute}{second}-{primary}.md"
+      field: false
+    subfolders: true
+    view:
+      primary: title
+      fields: [title, status, category, published, draft]
+      sort: [published, title, category, status]
+      search: [title, category, paperTitle, tags, status]
+      default:
+        sort: published
+        order: desc
+    fields:
+      - { name: title, label: 笔记标题, type: string, required: true }
+      - name: category
+        label: 论文分类
+        type: string
+        default: 未分类
+        description: "例如：端到端驾驶、生成式规划、BEV 感知。新分类会自动出现在博客。"
+      - name: status
+        label: 阅读状态
+        type: select
+        default: reading
+        required: true
+        options:
+          values:
+            - { name: queue, label: 待读 }
+            - { name: reading, label: 正在读 }
+            - { name: finished, label: 已读完 }
+      - name: body
+        label: 阅读笔记
+        type: rich-text
+        options:
+          format: markdown
+          switcher: true
+          rename: random
+        default: |
+          ## 这篇论文想解决什么问题？
+
+          ## 方法：输入怎样变成输出？
+
+          ## 关键公式与推导
+
+          ## 实验支持什么结论？
+
+          ## 我的理解与疑问
+      - name: draft
+        label: 暂存为草稿
+        type: boolean
+        default: false
+        description: "开启后不显示在博客。草稿源文件仍在公开仓库，私密内容不要放在这里。"
+      - name: paperUrl
+        label: 论文链接（选填）
+        type: string
+        default: ""
+        pattern:
+          regex: "^https?://[^\\s]+$|^$"
+          message: "请填写完整的 http:// 或 https:// 链接，也可以留空。"
+      - { name: paperTitle, label: 论文原题（选填）, type: string, default: "" }
+      - { name: description, label: 一句话摘要（选填）, type: text, default: "" }
+      - { name: tags, label: 标签（选填）, type: string, list: true }
+      - name: published
+        label: 记录日期
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - { name: pinned, label: 置顶笔记, type: boolean, default: false }
+      - name: codeUrl
+        label: 代码链接（选填）
+        type: string
+        default: ""
+        pattern:
+          regex: "^https?://[^\\s]+$|^$"
+          message: "请填写完整的 http:// 或 https:// 链接，也可以留空。"
+      - { name: authors, label: 作者（选填）, type: string, default: "" }
+      - { name: venue, label: 会议或期刊（选填）, type: string, default: "" }
+      - name: isSample
+        label: 标记为排版示例
+        type: boolean
+        default: false
+        description: 将示例改成自己的正式笔记后，可以关闭这个标记。
