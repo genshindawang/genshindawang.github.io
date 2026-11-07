@@ -20,10 +20,10 @@ const recent = (await papers()).slice(0, 6);
     <h2 class="text-xl font-bold text-90 mb-4">第一次使用，只连接一次</h2>
     <ol class="space-y-3 text-75 list-decimal pl-5 leading-relaxed">
       <li>打开写作后台，点击 <strong>Sign in with GitHub</strong>，用博客所属账号登录。</li>
-      <li>如果提示安装 Pages CMS，选择 <strong>Only select repositories</strong>，只勾选 <strong>genshindawang.github.io</strong>。</li>
+      <li>登录后，<a href="https://github.com/apps/pages-cms/installations/new" target="_blank" rel="noopener noreferrer" class="text-[var(--primary)] underline underline-offset-4">安装 Pages CMS 的 GitHub App ↗</a>。选择 <strong>Only select repositories</strong>，只勾选 <strong>genshindawang.github.io</strong>，确认权限后点击 <strong>Install</strong>。</li>
       <li>回到后台，打开「论文笔记与待读」，就可以写笔记了。以后直接从这里进入。</li>
     </ol>
-    <p class="text-sm text-50 mt-4">连接是为了让你点击保存后，后台能把笔记写回这个博客仓库。</p>
+    <p class="text-sm text-50 mt-4">GitHub 登录和 App 安装是两个步骤。只登录可能看得到公开笔记，但还不能保存；安装后后台才能把笔记写回博客仓库。</p>
   </section>
   <section class="card-base p-6 md:p-9 mb-4">
     <div class="flex items-baseline justify-between gap-3 mb-3"><h2 class="text-xl font-bold text-90">接着写</h2><a href={writerUrl()} target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--primary)]">全部笔记 ↗</a></div>

@@ -8,7 +8,7 @@
 
 打开博客的 [写作空间](https://genshindawang.github.io/admin/)，进入 [Pages CMS 后台](https://app.pagescms.org/genshindawang/genshindawang.github.io/main/collection/papers)。标题、分类和阅读状态用表单填写，正文在编辑器里写；保存会自动提交到 GitHub 并触发发布。
 
-首次使用：用 GitHub 登录 Pages CMS，并在安装 GitHub App 时选择 **Only select repositories**，只授权 `genshindawang.github.io`。此授权需要账号所有者完成。以后无需手动编辑文件头、起文件名、运行 Git 或填写 access token。
+首次使用分两步：先用 GitHub 登录 Pages CMS，再[安装 Pages CMS 的 GitHub App](https://github.com/apps/pages-cms/installations/new)。安装时选择 **Only select repositories**，只勾选 `genshindawang.github.io`，确认页面权限后点击 **Install**。只完成登录可能能读公开笔记，但保存会报 `Resource not accessible by integration`。安装授权需要账号所有者确认。以后无需手动编辑文件头、起文件名、运行 Git 或填写 access token。
 
 **写笔记**：首页“写笔记”进入新建表单；文章页“编辑这篇笔记”进入该篇表单。点击 Save 即保存并开始自动发布。**待读清单**：阅读状态选择「待读」「正在读」或「已读完」，不用移动文件。分类自由填写，会自动生成分类页。正文图片上传到 `public/uploads/`。
 
