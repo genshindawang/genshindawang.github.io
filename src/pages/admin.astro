@@ -2,33 +2,20 @@
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 import { newPaperUrl, paperEditorUrl, writerUrl } from "../data/notebook";
 import { papers, sourceFile, STATUS } from "../lib/papers";
-import { url } from "../utils/url-utils";
 const recent = (await papers()).slice(0, 6);
 ---
 <MainGridLayout title="写作空间">
   <section class="card-base p-6 md:p-9 mb-4">
     <p class="text-sm text-[var(--primary)] font-bold mb-3">DINNER · WRITING ROOM</p>
-    <h1 class="text-3xl font-bold text-90 mb-3">写下这次读懂的东西。</h1>
-    <p class="text-50 leading-relaxed max-w-2xl">填写标题、分类和阅读状态，在编辑器里写正文、插入图片。点击保存，博客会自动更新。</p>
+    <h1 class="text-3xl font-bold text-90">写下这次读懂的东西。</h1>
     <div class="flex flex-wrap gap-3 mt-6">
       <a href={newPaperUrl()} target="_blank" rel="noopener noreferrer" class="btn-regular rounded-xl px-5 h-12 font-bold">+ 写一篇新笔记 ↗</a>
       <a href={writerUrl()} target="_blank" rel="noopener noreferrer" class="btn-plain rounded-xl px-5 h-12">管理所有论文 ↗</a>
     </div>
-    <p class="text-50 text-sm mt-4 leading-relaxed">写作后台由 Pages CMS 提供。保存后通常需要等一轮自动构建，才会出现在博客。</p>
-  </section>
-  <section class="card-base p-6 md:p-9 mb-4">
-    <h2 class="text-xl font-bold text-90 mb-4">第一次使用，只连接一次</h2>
-    <ol class="space-y-3 text-75 list-decimal pl-5 leading-relaxed">
-      <li>打开写作后台，点击 <strong>Sign in with GitHub</strong>，用博客所属账号登录。</li>
-      <li>登录后，<a href="https://github.com/apps/pages-cms/installations/new" target="_blank" rel="noopener noreferrer" class="text-[var(--primary)] underline underline-offset-4">安装 Pages CMS 的 GitHub App ↗</a>。选择 <strong>Only select repositories</strong>，只勾选 <strong>genshindawang.github.io</strong>，确认权限后点击 <strong>Install</strong>。</li>
-      <li>回到后台，打开「论文笔记与待读」，就可以写笔记了。以后直接从这里进入。</li>
-    </ol>
-    <p class="text-sm text-50 mt-4">GitHub 登录和 App 安装是两个步骤。只登录可能看得到公开笔记，但还不能保存；安装后后台才能把笔记写回博客仓库。</p>
   </section>
   <section class="card-base p-6 md:p-9 mb-4">
     <div class="flex items-baseline justify-between gap-3 mb-3"><h2 class="text-xl font-bold text-90">接着写</h2><a href={writerUrl()} target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--primary)]">全部笔记 ↗</a></div>
     <div class="divide-y divide-black/5 dark:divide-white/10">{recent.map(paper => <a href={paperEditorUrl(sourceFile(paper))} target="_blank" rel="noopener noreferrer" class="flex flex-col sm:flex-row sm:items-center gap-2 py-4 hover:text-[var(--primary)]"><span class="flex-1 text-75 font-medium">{paper.data.title}</span><span class="text-sm text-50">{STATUS[paper.data.status]} · 编辑 ↗</span></a>)}</div>
-    {!recent.length && <p class="text-50">这里会列出你最近的笔记。</p>}
+    {!recent.length && <p class="text-50">暂无笔记</p>}
   </section>
-  <p class="text-sm text-50 px-2 leading-relaxed">收集新论文时把阅读状态选为「待读」；开始读后切换成「正在读」。<a class="text-[var(--primary)]" href={url("/writing/")}>图片、公式与草稿的说明 →</a></p>
 </MainGridLayout>

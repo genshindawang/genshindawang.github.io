@@ -6,7 +6,7 @@ const root=path.resolve('dist');
 async function walk(dir){let out=[];for(const e of await readdir(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())out.push(...await walk(p));else out.push(p);}return out;}
 const files=await walk(root);const htmlFiles=files.filter(f=>f.endsWith('.html'));
 assert(htmlFiles.length>=6,'No complete static site');
-for(const required of ['index.html','to-read/index.html','categories/index.html','search/index.html','writing/index.html','admin/index.html','404.html','pagefind/pagefind.js'])await access(path.join(root,required));
+for(const required of ['index.html','to-read/index.html','categories/index.html','search/index.html','admin/index.html','404.html','pagefind/pagefind.js'])await access(path.join(root,required));
 let checked=0;
 for(const file of htmlFiles){
  const html=await readFile(file,'utf8');

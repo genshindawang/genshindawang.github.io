@@ -2,7 +2,7 @@
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 ---
 <MainGridLayout title="搜索笔记">
-  <section class="card-base p-6 md:p-9"><h1 class="text-2xl font-bold text-90 mb-5">搜索笔记</h1><form id="paper-search" class="flex gap-3"><input id="search-query" type="search" name="q" aria-label="搜索关键词" placeholder="论文名称、研究方向或笔记中的一句话" class="notebook-search !w-full" /><button class="btn-regular rounded-lg px-5" type="submit">搜索</button></form><p id="search-status" class="text-50 text-sm mt-5" role="status">输入关键词，搜索论文和正文。</p><div id="search-results" class="mt-6 space-y-5"></div></section>
+  <section class="card-base p-6 md:p-9"><h1 class="text-2xl font-bold text-90 mb-5">搜索笔记</h1><form id="paper-search" class="flex gap-3"><input id="search-query" type="search" name="q" aria-label="搜索关键词" placeholder="搜索论文和笔记" class="notebook-search !w-full" /><button class="btn-regular rounded-lg px-5" type="submit">搜索</button></form><p id="search-status" class="text-50 text-sm mt-5 empty:hidden" role="status"></p><div id="search-results" class="mt-6 space-y-5"></div></section>
 </MainGridLayout>
 <script>
 type SearchHit={url:string;meta:{title?:string};excerpt:string};
@@ -14,7 +14,7 @@ let module:Promise<SearchModule>|undefined;
 let generation=0;
 async function search(query:string){
   const current=++generation;results.replaceChildren();
-  if(!query){status.textContent="输入关键词，搜索论文和正文。";return;}
+  if(!query){status.textContent="";return;}
   status.textContent="正在搜索…";
   try{
     const path=`${import.meta.env.BASE_URL}pagefind/pagefind.js`;
@@ -22,9 +22,9 @@ async function search(query:string){
     const found=await(await module!).search(query);
     const hits=await Promise.all(found.results.slice(0,30).map(hit=>hit.data()));
     if(current!==generation)return;
-    status.textContent=found.results.length?`找到 ${found.results.length} 篇相关笔记${found.results.length>30?"，展示前 30 篇":""}。`:"没有找到相关笔记，试试其他关键词。";
+    status.textContent=found.results.length?`找到 ${found.results.length} 篇相关笔记${found.results.length>30?"，展示前 30 篇":""}。`:"没有找到相关笔记。";
     for(const hit of hits){const card=document.createElement("article");card.className="border-t border-dashed border-black/10 dark:border-white/15 pt-5";const link=document.createElement("a");link.href=hit.url;link.className="text-xl font-bold text-[var(--primary)]";link.textContent=hit.meta.title||"论文笔记";const excerpt=document.createElement("p");excerpt.className="mt-2 text-75 text-sm leading-relaxed";excerpt.textContent=hit.excerpt.replace(/<[^>]*>/g,"");card.append(link,excerpt);results.append(card);}
-  }catch{if(current===generation)status.textContent="搜索暂时不可用，请刷新后重试。";}
+  }catch{if(current===generation)status.textContent="搜索暂时不可用。";}
 }
 input.value=new URLSearchParams(location.search).get("q")??"";search(input.value.trim());
 document.getElementById("paper-search")?.addEventListener("submit",event=>{event.preventDefault();const query=input.value.trim();const next=new URL(location.href);if(query)next.searchParams.set("q",query);else next.searchParams.delete("q");history.replaceState(null,"",next);search(query);});

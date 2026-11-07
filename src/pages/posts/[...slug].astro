@@ -17,7 +17,6 @@ const {data}=paper;const {Content,headings}=await paper.render();
     <div class="flex flex-wrap gap-4 text-sm mb-6">{data.paperUrl&&<a class="text-[var(--primary)] link" href={data.paperUrl} target="_blank" rel="noopener noreferrer">论文原文 ↗</a>}{data.codeUrl&&<a class="text-[var(--primary)] link" href={data.codeUrl} target="_blank" rel="noopener noreferrer">代码 ↗</a>}</div>
     <div class="flex flex-wrap items-center gap-3" data-pagefind-ignore><a href={paperEditorUrl(sourceFile(paper))} target="_blank" rel="noopener noreferrer" class="btn-regular rounded-lg px-4 h-10 text-sm">编辑这篇笔记 ↗</a><a href={url("/admin/")} class="btn-plain rounded-lg px-3 h-10 text-sm">写作空间</a></div>
     <hr class="border-dashed border-black/10 dark:border-white/15 my-7" />
-    {data.status==="queue"&&<p class="text-50 text-sm mb-6" data-pagefind-ignore>开始读时，点击「编辑这篇笔记」，将阅读状态选为「正在读」，保存即可。</p>}
     <Markdown class="mb-6"><Content /></Markdown>
     {data.tags.length>0&&<div class="flex gap-3 flex-wrap pt-8 text-sm text-50">{data.tags.map(tag=><a href={tagUrl(tag)} class="hover:text-[var(--primary)]">#{tag}</a>)}</div>}
   </article>

@@ -8,5 +8,5 @@ interface Props { class?:string; style?:string; }
 ---
 <WidgetLayout name="论文分类" id="categories" isCollapsed={categories.length > 5} collapsedHeight="7.5rem" class={Astro.props.class} style={Astro.props.style}>
   {categories.map(c=><ButtonLink url={topicUrl(c.name)} badge={String(c.count)} label={`查看 ${c.name}`}>{c.name}</ButtonLink>)}
-  {!categories.length && <p class="text-50 text-sm px-3 py-2">添加论文后自动整理分类</p>}
+  {!categories.length && <p class="text-50 text-sm px-3 py-2">暂无分类</p>}
 </WidgetLayout>

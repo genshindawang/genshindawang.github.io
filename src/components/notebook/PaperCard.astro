@@ -4,6 +4,7 @@ import { dateText, paperUrl, topicUrl, STATUS, type Paper } from "../../lib/pape
 const { paper } = Astro.props as {paper:Paper};
 const {data} = paper;
 const href = paperUrl(paper);
+const description = data.description || data.paperTitle;
 ---
 <article data-paper-card data-status={data.status} class="card-base flex flex-col w-full rounded-[var(--radius-large)] overflow-hidden relative">
   <div class="pl-6 md:pl-9 pr-6 md:pr-2 pt-6 md:pt-7 pb-6 relative w-full md:w-[calc(100%_-_64px)]">
@@ -13,7 +14,7 @@ const href = paperUrl(paper);
       <a href={topicUrl(data.category || "未分类")} class="inline-flex gap-1 items-center hover:text-[var(--primary)]"><Icon name="material-symbols:folder-outline-rounded" class="text-xl text-[var(--primary)]" />{data.category || "未分类"}</a>
       <span>{STATUS[data.status]}</span>{data.pinned && <span>置顶</span>}{data.isSample && <span>示例</span>}{data.draft && <span>草稿</span>}
     </div>
-    <p class="transition text-75 mb-3.5 pr-4 line-clamp-2 notebook-description">{data.description || data.paperTitle || "点击查看论文与阅读笔记。"}</p>
+    {description && <p class="transition text-75 mb-3.5 pr-4 line-clamp-2 notebook-description">{description}</p>}
     <div class="text-sm text-black/30 dark:text-white/30 flex flex-wrap gap-x-4 gap-y-2 transition"><span>{data.venue || "论文笔记"}</span>{data.tags.length > 0 && <span>{data.tags.join(" / ")}</span>}</div>
   </div>
   <a href={href} aria-label={`查看 ${data.title}`} class="!hidden md:!flex btn-regular w-[3.25rem] absolute right-3 top-3 bottom-3 rounded-xl bg-[var(--enter-btn-bg)] hover:bg-[var(--enter-btn-bg-hover)] active:bg-[var(--enter-btn-bg-active)] active:scale-95"><Icon name="material-symbols:chevron-right-rounded" class="transition text-[var(--primary)] text-4xl mx-auto" /></a>
