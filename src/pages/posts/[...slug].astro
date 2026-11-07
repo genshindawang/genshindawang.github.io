@@ -1,0 +1,24 @@
+---
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import Markdown from "../../components/misc/Markdown.astro";
+import { papers, sourceFile, topicUrl, tagUrl, dateText, STATUS, type Paper } from "../../lib/papers";
+import { editUrl } from "../../data/notebook";
+import { url } from "../../utils/url-utils";
+export async function getStaticPaths(){return (await papers()).map(paper=>({params:{slug:paper.slug},props:{paper}}));}
+const {paper}=Astro.props as {paper:Paper};
+const {data}=paper;const {Content,headings}=await paper.render();
+---
+<MainGridLayout title={data.title} description={data.description} headings={headings} setOGTypeArticle>
+  <article class="card-base px-6 py-8 md:p-9" data-pagefind-body>
+    <a href={url("/")} class="text-sm text-50 hover:text-[var(--primary)]" data-pagefind-ignore>← 论文笔记</a>
+    <h1 class="font-bold text-3xl md:text-4xl text-90 mt-5 mb-4 leading-tight" data-pagefind-meta="title">{data.title}</h1>
+    <div class="text-sm text-50 flex flex-wrap gap-x-4 gap-y-2 mb-5"><span>{dateText(data.updated??data.published)}</span><a class="hover:text-[var(--primary)]" href={topicUrl(data.category||"未分类")}>{data.category||"未分类"}</a><span>{STATUS[data.status]}</span>{data.isSample&&<span>示例笔记</span>}</div>
+    {data.paperTitle&&<p class="text-75 mb-2 leading-relaxed">{data.paperTitle}</p>}{(data.authors||data.venue)&&<p class="text-sm text-50 mb-4">{[data.authors,data.venue].filter(Boolean).join(" · ")}</p>}
+    <div class="flex flex-wrap gap-4 text-sm mb-6">{data.paperUrl&&<a class="text-[var(--primary)] link" href={data.paperUrl} target="_blank" rel="noopener noreferrer">论文原文 ↗</a>}{data.codeUrl&&<a class="text-[var(--primary)] link" href={data.codeUrl} target="_blank" rel="noopener noreferrer">代码 ↗</a>}</div>
+    <div class="flex flex-wrap items-center gap-3" data-pagefind-ignore><a href={editUrl(sourceFile(paper))} target="_blank" rel="noopener noreferrer" class="btn-regular rounded-lg px-4 h-10 text-sm">在 GitHub 编辑 ↗</a><a href={url("/writing/")} class="btn-plain rounded-lg px-3 h-10 text-sm">写作说明</a></div>
+    <hr class="border-dashed border-black/10 dark:border-white/15 my-7" />
+    {data.status==="queue"&&<p class="text-50 text-sm mb-6" data-pagefind-ignore>开始读时，点击“在 GitHub 编辑”，把文件开头的 status 改为 reading，提交后会自动更新。</p>}
+    <Markdown class="mb-6"><Content /></Markdown>
+    {data.tags.length>0&&<div class="flex gap-3 flex-wrap pt-8 text-sm text-50">{data.tags.map(tag=><a href={tagUrl(tag)} class="hover:text-[var(--primary)]">#{tag}</a>)}</div>}
+  </article>
+</MainGridLayout>

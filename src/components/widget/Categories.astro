@@ -1,0 +1,12 @@
+---
+import { papers, topicUrl } from "../../lib/papers";
+import ButtonLink from "../control/ButtonLink.astro";
+import WidgetLayout from "./WidgetLayout.astro";
+const notes = await papers();
+const categories = [...new Set(notes.map(n=>n.data.category || "未分类"))].map(name=>({name,count:notes.filter(n=>(n.data.category || "未分类")===name).length})).sort((a,b)=>a.name.localeCompare(b.name,"zh-CN"));
+interface Props { class?:string; style?:string; }
+---
+<WidgetLayout name="论文分类" id="categories" isCollapsed={categories.length > 5} collapsedHeight="7.5rem" class={Astro.props.class} style={Astro.props.style}>
+  {categories.map(c=><ButtonLink url={topicUrl(c.name)} badge={String(c.count)} label={`查看 ${c.name}`}>{c.name}</ButtonLink>)}
+  {!categories.length && <p class="text-50 text-sm px-3 py-2">添加论文后自动整理分类</p>}
+</WidgetLayout>

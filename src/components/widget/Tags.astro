@@ -1,0 +1,11 @@
+---
+import { papers, tagUrl } from "../../lib/papers";
+import ButtonTag from "../control/ButtonTag.astro";
+import WidgetLayout from "./WidgetLayout.astro";
+const tags = [...new Set((await papers()).flatMap(n=>n.data.tags))];
+interface Props { class?:string; style?:string; }
+---
+<WidgetLayout name="标签" id="tags" isCollapsed={tags.length >= 20} collapsedHeight="7.5rem" class={Astro.props.class} style={Astro.props.style}>
+  <div class="flex gap-2 flex-wrap">{tags.map(tag=><ButtonTag href={tagUrl(tag)} label={`查看 ${tag}`}>{tag}</ButtonTag>)}</div>
+  {!tags.length && <p class="text-50 text-sm px-3 py-2">还没有标签</p>}
+</WidgetLayout>

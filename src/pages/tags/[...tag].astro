@@ -1,0 +1,8 @@
+---
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import PaperCard from "../../components/notebook/PaperCard.astro";
+import { papers, type Paper } from "../../lib/papers";
+export async function getStaticPaths(){const entries=await papers();return [...new Set(entries.flatMap(p=>p.data.tags))].map(tag=>({params:{tag},props:{tag,entries:entries.filter(p=>p.data.tags.includes(tag))}}));}
+const {tag,entries}=Astro.props as {tag:string;entries:Paper[]};
+---
+<MainGridLayout title={`标签：${tag}`}><div class="card-base p-6 md:px-9 mb-4"><h1 class="text-2xl font-bold text-90">#{tag}</h1><p class="text-50 mt-2">{entries.length} 篇论文</p></div><div class="flex flex-col gap-4">{entries.map(paper=><PaperCard paper={paper} />)}</div></MainGridLayout>

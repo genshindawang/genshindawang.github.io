@@ -1,0 +1,8 @@
+---
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import PaperCard from "../../components/notebook/PaperCard.astro";
+import { papers, topics, type Paper } from "../../lib/papers";
+export async function getStaticPaths(){const entries=await papers();return topics(entries).map(category=>({params:{category},props:{category,entries:entries.filter(p=>(p.data.category||"未分类")===category)}}));}
+const {category,entries}=Astro.props as {category:string;entries:Paper[]};
+---
+<MainGridLayout title={category}><div class="card-base p-6 md:px-9 mb-4"><h1 class="text-2xl font-bold text-90">{category}</h1><p class="text-50 mt-2">{entries.length} 篇论文</p></div><div class="flex flex-col gap-4">{entries.map(paper=><PaperCard paper={paper} />)}</div></MainGridLayout>

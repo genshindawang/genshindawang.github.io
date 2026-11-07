@@ -1,0 +1,8 @@
+/* Notebook additions; the page layout and theme are Fuwari. */
+.notebook-search{background:var(--btn-regular-bg);border:0;border-radius:.5rem;color:var(--btn-content);padding:.6rem .8rem;width:9rem;font-size:.875rem;outline-offset:3px}
+.notebook-description{overflow-wrap:anywhere}
+.review-question{padding:1rem 0;border-bottom:1px dashed var(--line-divider)}
+.review-question summary{cursor:pointer;color:var(--primary);font-weight:500;line-height:1.7}
+@media(max-width:1023px){#banner img{object-position:right center!important}}
+
+[data-paper-card][hidden],#empty-state[hidden]{display:none!important}
